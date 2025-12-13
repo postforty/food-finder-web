@@ -19,10 +19,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* 통일된 콘텐츠 너비 및 정렬 */
 .main-container {
-  max-width: 1200px;
+  max-width: 780px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0 18px;
+  box-sizing: border-box;
+}
+.filters-container,
+.card-container {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 header {
@@ -37,10 +46,63 @@ header h1 {
   margin: 0;
 }
 
+/* 입력창-룰렛버튼 한 줄(row), 카테고리 버튼그룹은 아래에 */
 .filters-container {
+  display: block;
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto 18px auto;
+  box-sizing: border-box;
+}
+.filter-top-row {
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 40px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.category-btn-group {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px 10px; /* row-gap col-gap */
+  margin-bottom: 0;
+}
+.filter-btn, .roulette-button {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0 16px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.roulette-button {
+  min-width: 100px;
+}
+.search-input-wrapper {
+  width: 100%;
+  max-width: 370px;
+  min-width: 180px;
+  position: relative;
+}
+.search-input-wrapper input[type="search"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 38px;
+  padding-left: 15px;
+  height: 40px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1.1px solid #ffe1b1;
+  background: #fffdf7;
+  /* 기존 스타일과 병행 적용 가능 */
+}
+#random-roulette.roulette-button {
+  flex-shrink: 0;
 }
 
 #search-input {
@@ -58,6 +120,22 @@ header h1 {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 4px var(--secondary-color);
+}
+
+/* 검색창 wrapper 및 icon 스타일 */
+.search-input-wrapper {
+  display: inline-block;
+  position: relative;
+}
+.search-input-wrapper input[type="search"] {
+  padding-right: 34px; /* 아이콘 위치만큼 여유 */
+}
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .card-container {
@@ -219,14 +297,6 @@ header h1 {
 }
 
 /* Filter Button Styles */
-.filters-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-}
-
 .filter-btn {
     background-color: var(--card-background);
     color: var(--text-color);
@@ -248,4 +318,109 @@ header h1 {
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
+}
+
+/* 랜덤 룰렛 버튼 스타일 추가 */
+.roulette-button {
+  margin-left: 10px;
+  padding: 10px 18px;
+  background: linear-gradient(90deg, #ffde70 0%, #ffa556 100%);
+  color: #222;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(255,173,77,0.18);
+}
+.roulette-button:hover {
+  background: linear-gradient(90deg, #ffd74c 0%, #ff9d32 100%);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 16px 0 rgba(255,173,77,0.30);
+}
+
+/* 룰렛 아이콘 스타일 */
+.roulette-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+/* 모바일에서만 줄바꿈 보이기 */
+.mobile-br {
+  display: none;
+}
+@media (max-width: 600px) {
+  .mobile-br {
+    display: inline;
+  }
+  .filter-btn, .roulette-button {
+    height: 32px;
+    font-size: 0.97rem;
+    padding: 0 10px;
+  }
+  .roulette-button {
+    min-width: 78px;
+  }
+}
+
+/* 스크롤 이동 버튼 */
+.scroll-buttons {
+  position: fixed;
+  right: 18px;
+  bottom: 26px;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.scroll-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: rgba(255,255,255,0.95);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px 0 rgba(255,170,86,0.10);
+  cursor: pointer;
+  transition: transform 0.13s, box-shadow 0.13s;
+  outline: none;
+}
+.scroll-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 20px 0 rgba(255,170,86,0.18);
+}
+.scroll-btn svg {
+  vertical-align: middle;
+}
+.scroll-btn.hide {
+  display: none !important;
+}
+@media (max-width:600px) {
+  .scroll-buttons {
+    right: 10px;
+    bottom: 15px;
+    gap: 6px;
+  }
+  .scroll-btn {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 850px) {
+  .main-container, .filters-container, .card-container {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-input-wrapper { max-width: 100%; }
+  .search-input-wrapper input[type='search'] { font-size: 0.97rem; height: 34px; }
+  .search-icon { width: 17px; height: 17px; right: 10px; }
 }

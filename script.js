@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModalButton = document.getElementById('close-modal');
     const filtersContainer = document.getElementById('category-filters');
     const searchInput = document.getElementById('search-input');
+    const rouletteButton = document.getElementById('random-roulette');
 
     let allRestaurants = []; // To store all restaurant data
     let debounceTimer;
@@ -56,8 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setupCategoryFilters() {
+        const categoryBtnGroup = filtersContainer.querySelector('.category-btn-group');
+        const rouletteBtn = categoryBtnGroup.querySelector('#random-roulette');
         const categories = ['전체', ...new Set(allRestaurants.map(r => r.category).filter(Boolean))];
-        
+        // .category-btn-group 내에서, 룰렛 버튼 외 모두 제거 (버튼 재생성 시 기존 카테고리만 삭제)
+        Array.from(categoryBtnGroup.children).forEach(child => {
+            if(child !== rouletteBtn) categoryBtnGroup.removeChild(child);
+        });
         categories.forEach(category => {
             const button = document.createElement('button');
             button.className = 'filter-btn';
@@ -66,12 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (category === '전체') {
                 button.classList.add('active');
             }
-            filtersContainer.appendChild(button);
+            categoryBtnGroup.insertBefore(button, rouletteBtn);
         });
 
-        filtersContainer.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON') {
-                filtersContainer.querySelector('.active').classList.remove('active');
+        categoryBtnGroup.addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-btn')) {
+                const current = categoryBtnGroup.querySelector('.filter-btn.active');
+                if (current) current.classList.remove('active');
                 e.target.classList.add('active');
                 applyFilters();
             }
@@ -140,4 +147,52 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
     });
+
+    if (rouletteButton) {
+        rouletteButton.addEventListener('click', () => {
+            if (allRestaurants.length > 0) {
+                const randomIndex = Math.floor(Math.random() * allRestaurants.length);
+                const randomRestaurant = allRestaurants[randomIndex];
+                openModal(randomRestaurant);
+            } else {
+                alert('식당 데이터가 아직 준비되지 않았습니다.');
+            }
+        });
+    }
+
+    // TOP / DOWN 스크롤 이동 기능 + 동적 표시 제어
+    const scrollTopBtn = document.getElementById('scroll-top');
+    const scrollDownBtn = document.getElementById('scroll-down');
+    if (scrollTopBtn) {
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+    if (scrollDownBtn) {
+        scrollDownBtn.addEventListener('click', () => {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        });
+    }
+    const updateScrollButtons = () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollBottom = window.innerHeight + scrollTop >= document.body.offsetHeight - 3; // 약간의 오차 허용
+        if (scrollTopBtn) {
+            if (scrollTop < 16) {
+                scrollTopBtn.classList.add('hide');
+            } else {
+                scrollTopBtn.classList.remove('hide');
+            }
+        }
+        if (scrollDownBtn) {
+            if (scrollBottom) {
+                scrollDownBtn.classList.add('hide');
+            } else {
+                scrollDownBtn.classList.remove('hide');
+            }
+        }
+    };
+    window.addEventListener('scroll', updateScrollButtons);
+    window.addEventListener('resize', updateScrollButtons);
+    // 페이지 최초 렌더에도 반영
+    updateScrollButtons();
 });
