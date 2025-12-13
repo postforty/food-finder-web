@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>맛집 리스트</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <header>
+        <h1>오늘 점심 뭐 먹지?</h1>
+      </header>
+      <div id="category-filters" class="filters-container">
+        <input type="search" id="search-input" placeholder="식당 이름으로 검색..." />
+      </div>
+      <main id="restaurant-cards" class="card-container"></main>
+    </div>
+
+    <!-- Modal for details -->
+    <div id="modal" class="modal-overlay">
+      <div class="modal-content">
+        <span class="close-button" id="close-modal">&times;</span>
+        <div id="modal-body">
+          <img id="modal-img" src="" alt="식당 이미지" />
+          <h2 id="modal-title"></h2>
+          <p id="modal-category" class="category"></p>
+          <p id="modal-description"></p>
+          <div class="info-grid">
+            <p>
+              <strong>방문자 리뷰</strong>
+              <span id="modal-visitor-reviews"></span>
+            </p>
+            <p>
+              <strong>블로그 리뷰</strong> <span id="modal-blog-reviews"></span>
+            </p>
+            <p><strong>주소</strong> <span id="modal-address"></span></p>
+            <p><strong>연락처</strong> <span id="modal-phone"></span></p>
+            <p><strong>영업시간</strong> <span id="modal-hours"></span></p>
+          </div>
+          <a id="modal-map-button" href="#" target="_blank" class="map-button"
+            >지도 보기</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

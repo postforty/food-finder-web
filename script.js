@@ -1,0 +1,143 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const cardContainer = document.getElementById('restaurant-cards');
+    const modal = document.getElementById('modal');
+    const closeModalButton = document.getElementById('close-modal');
+    const filtersContainer = document.getElementById('category-filters');
+    const searchInput = document.getElementById('search-input');
+
+    let allRestaurants = []; // To store all restaurant data
+    let debounceTimer;
+
+    if (!cardContainer || !modal || !closeModalButton || !filtersContainer || !searchInput) {
+        console.error('Error: A critical element was not found in the DOM!');
+        return;
+    }
+
+    // Fetch data, set up filters, and build cards
+    fetch('list.json')
+        .then(response => response.json())
+        .then(data => {
+            allRestaurants = data.filter(item => item.title);
+            setupCategoryFilters();
+            renderCards(allRestaurants); // Initial render of all cards
+        })
+        .catch(error => {
+            console.error('Error fetching restaurant data:', error);
+            cardContainer.innerHTML = '<p class="error-message">데이터를 불러오는 데 실패했습니다.</p>';
+        });
+
+    function debounce(func, delay) {
+        return function(...args) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                func.apply(this, args);
+            }, delay);
+        };
+    }
+
+    function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeCategoryButton = filtersContainer.querySelector('.filter-btn.active');
+        const selectedCategory = activeCategoryButton ? activeCategoryButton.dataset.category : '전체';
+
+        let filteredRestaurants = allRestaurants;
+
+        // 1. Filter by category
+        if (selectedCategory !== '전체') {
+            filteredRestaurants = filteredRestaurants.filter(r => r.category === selectedCategory);
+        }
+
+        // 2. Filter by search term
+        if (searchTerm) {
+            filteredRestaurants = filteredRestaurants.filter(r => r.title.toLowerCase().includes(searchTerm));
+        }
+
+        renderCards(filteredRestaurants);
+    }
+
+    function setupCategoryFilters() {
+        const categories = ['전체', ...new Set(allRestaurants.map(r => r.category).filter(Boolean))];
+        
+        categories.forEach(category => {
+            const button = document.createElement('button');
+            button.className = 'filter-btn';
+            button.textContent = category;
+            button.dataset.category = category;
+            if (category === '전체') {
+                button.classList.add('active');
+            }
+            filtersContainer.appendChild(button);
+        });
+
+        filtersContainer.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                filtersContainer.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
+                applyFilters();
+            }
+        });
+    }
+    
+    function renderCards(restaurants) {
+        cardContainer.innerHTML = '';
+        if (restaurants.length === 0) {
+            cardContainer.innerHTML = '<p>해당 조건의 식당이 없습니다.</p>';
+            return;
+        }
+        restaurants.forEach(restaurant => {
+            const card = createRestaurantCard(restaurant);
+            card.addEventListener('click', () => openModal(restaurant));
+            cardContainer.appendChild(card);
+        });
+    }
+
+    function createRestaurantCard(restaurant) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <img class="card-img" src="${restaurant.imageUrl || 'https://via.placeholder.com/300x200.png?text=No+Image'}" alt="${restaurant.title}">
+            <div class="card-content">
+                <h3 class="card-title">${restaurant.title}</h3>
+                <p class="card-category">${restaurant.category || '기타'}</p>
+            </div>
+        `;
+        return card;
+    }
+
+    function openModal(restaurant) {
+        document.getElementById('modal-img').src = restaurant.imageUrl || 'https://via.placeholder.com/600x250.png?text=No+Image';
+        document.getElementById('modal-title').textContent = restaurant.title || '제목 없음';
+        // ... (rest of modal population logic is the same)
+        document.getElementById('modal-category').textContent = restaurant.category || '기타';
+        document.getElementById('modal-description').textContent = restaurant.description || '설명 없음';
+        document.getElementById('modal-visitor-reviews').textContent = restaurant.visitorReviews || '정보 없음';
+        document.getElementById('modal-blog-reviews').textContent = restaurant.blogReviews || '정보 없음';
+        document.getElementById('modal-address').textContent = restaurant.address || '정보 없음';
+        document.getElementById('modal-phone').textContent = restaurant.phone || '정보 없음';
+        document.getElementById('modal-hours').textContent = (restaurant.businessHours || '정보 없음').replace(/\\n/g, ' ');
+
+        const mapButton = document.getElementById('modal-map-button');
+        if (restaurant.url) {
+            mapButton.href = restaurant.url;
+            mapButton.style.display = 'inline-block';
+        } else {
+            mapButton.style.display = 'none';
+        }
+
+        modal.classList.add('active');
+    }
+
+    function closeModal() {
+        if (modal) modal.classList.remove('active');
+    }
+
+    // Event Listeners
+    searchInput.addEventListener('input', debounce(applyFilters, 300));
+    closeModalButton.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+});
