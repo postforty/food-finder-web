@@ -484,3 +484,25 @@ header h1 {
   align-items: center;
   justify-content: center;
 }
+
+.modal-content {
+  overflow: visible;
+  position: relative;
+}
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  z-index: 10;
+  padding: 0px 10px;
+}
+.close-button:hover {
+  color: #333;
+  transform: scale(1.1);
+}
+#modal-img {
+  margin-top: 16px; /* 닫기 버튼과 완전히 겹치지 않게 더 큰 여백 추가 */
+}
