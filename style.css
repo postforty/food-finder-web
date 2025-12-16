@@ -1,4 +1,3 @@
-
 :root {
   --primary-color: #ff6b00;
   --secondary-color: #ffc9a3;
@@ -10,7 +9,7 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
   margin: 0;
@@ -69,7 +68,8 @@ header h1 {
   gap: 9px 10px; /* row-gap col-gap */
   margin-bottom: 0;
 }
-.filter-btn, .roulette-button {
+.filter-btn,
+.roulette-button {
   height: 38px;
   display: flex;
   align-items: center;
@@ -251,9 +251,9 @@ header h1 {
 }
 
 #modal-category {
-    font-size: 1rem;
-    color: #777;
-    margin-bottom: 20px;
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 20px;
 }
 
 #modal-description {
@@ -275,9 +275,9 @@ header h1 {
 }
 
 .info-grid strong {
-    display: block;
-    color: #555;
-    margin-bottom: 4px;
+  display: block;
+  color: #555;
+  margin-bottom: 4px;
 }
 
 .map-button {
@@ -298,26 +298,26 @@ header h1 {
 
 /* Filter Button Styles */
 .filter-btn {
-    background-color: var(--card-background);
-    color: var(--text-color);
-    border: 1px solid #ddd;
-    padding: 10px 20px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: all 0.2s ease-in-out;
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
 }
 
 .filter-btn:hover {
-    background-color: var(--secondary-color);
-    border-color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border-color: var(--primary-color);
 }
 
 .filter-btn.active {
-    background-color: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
 }
 
 /* 랜덤 룰렛 버튼 스타일 추가 */
@@ -332,12 +332,12 @@ header h1 {
   font-size: 1rem;
   cursor: pointer;
   transition: box-shadow 0.2s, transform 0.2s;
-  box-shadow: 0 2px 8px 0 rgba(255,173,77,0.18);
+  box-shadow: 0 2px 8px 0 rgba(255, 173, 77, 0.18);
 }
 .roulette-button:hover {
   background: linear-gradient(90deg, #ffd74c 0%, #ff9d32 100%);
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 16px 0 rgba(255,173,77,0.30);
+  box-shadow: 0 4px 16px 0 rgba(255, 173, 77, 0.3);
 }
 
 /* 룰렛 아이콘 스타일 */
@@ -351,11 +351,43 @@ header h1 {
 .mobile-br {
   display: none;
 }
+.naver-map-tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 14px 16px;
+  background: linear-gradient(90deg, #ecfdf4 0%, #f0f7ff 100%);
+  border-radius: var(--border-radius);
+  border: 1.5px solid #a0eacf;
+  box-shadow: 0 2px 12px 0 rgba(86, 178, 128, 0.09);
+  font-size: 1rem;
+}
+
+.naver-map-tip .map-tip-emoji {
+  font-size: 1.4rem;
+}
+
+.naver-map-tip .map-tip-desc {
+  margin: 0;
+  color: #318568;
+  font-size: 0.97rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.naver-map-tip .highlight {
+  font-weight: 700;
+  color: #246f3d;
+}
+
 @media (max-width: 600px) {
   .mobile-br {
     display: inline;
   }
-  .filter-btn, .roulette-button {
+  .filter-btn,
+  .roulette-button {
     height: 32px;
     font-size: 0.97rem;
     padding: 0 10px;
@@ -382,16 +414,16 @@ header h1 {
   width: 44px;
   height: 44px;
   border: none;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 50%;
-  box-shadow: 0 2px 8px 0 rgba(255,170,86,0.10);
+  box-shadow: 0 2px 8px 0 rgba(255, 170, 86, 0.1);
   cursor: pointer;
   transition: transform 0.13s, box-shadow 0.13s;
   outline: none;
 }
 .scroll-btn:hover {
   transform: scale(1.08);
-  box-shadow: 0 4px 20px 0 rgba(255,170,86,0.18);
+  box-shadow: 0 4px 20px 0 rgba(255, 170, 86, 0.18);
 }
 .scroll-btn svg {
   vertical-align: middle;
@@ -399,7 +431,7 @@ header h1 {
 .scroll-btn.hide {
   display: none !important;
 }
-@media (max-width:600px) {
+@media (max-width: 600px) {
   .scroll-buttons {
     right: 10px;
     bottom: 15px;
@@ -412,7 +444,9 @@ header h1 {
 }
 
 @media (max-width: 850px) {
-  .main-container, .filters-container, .card-container {
+  .main-container,
+  .filters-container,
+  .card-container {
     max-width: 100%;
     padding-left: 0;
     padding-right: 0;
@@ -420,7 +454,16 @@ header h1 {
 }
 
 @media (max-width: 480px) {
-  .search-input-wrapper { max-width: 100%; }
-  .search-input-wrapper input[type='search'] { font-size: 0.97rem; height: 34px; }
-  .search-icon { width: 17px; height: 17px; right: 10px; }
+  .search-input-wrapper {
+    max-width: 100%;
+  }
+  .search-input-wrapper input[type="search"] {
+    font-size: 0.97rem;
+    height: 34px;
+  }
+  .search-icon {
+    width: 17px;
+    height: 17px;
+    right: 10px;
+  }
 }
