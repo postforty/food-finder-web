@@ -138,5 +138,42 @@
         </svg>
       </button>
     </div>
+    <div
+      id="roulette-overlay"
+      style="
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.9);
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div id="roulette-overlay">
+        <div id="roulette-animation">
+          <svg width="88" height="88" viewBox="0 0 88 88" class="roulette-spin">
+            <rect x="14" y="14" width="60" height="60" rx="12" fill="#fff1d6" />
+            <circle cx="28" cy="28" r="7" fill="#FF9500" />
+            <circle cx="60" cy="28" r="7" fill="#FF9500" />
+            <circle cx="28" cy="60" r="7" fill="#FF9500" />
+            <circle cx="60" cy="60" r="7" fill="#FF9500" />
+          </svg>
+        </div>
+        <div
+          style="
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-top: 14px;
+          "
+        >
+          잠시만요!<br />운명의 주사위를 굴리는 중...
+        </div>
+      </div>
+    </div>
   </body>
 </html>

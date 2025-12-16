@@ -467,3 +467,20 @@ header h1 {
     right: 10px;
   }
 }
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.roulette-spin {
+  animation: spin 0.9s linear infinite;
+}
+
+#roulette-animation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
